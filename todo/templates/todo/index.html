@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %} TODO{% endblock title %}
+
+
+{% block content %}
+<h1>Welcome to MY TODO.</h1>
+<h2>Plan your DAY.</h2>
+{% for task in tasks %}
+  <div>
+      <a href="{% url 'todo:update' id=task.id%}">Update></a>
+      <a href="{% url 'todo:delete' id=task.id%}">Delete></a>
+      {% if task.isCompleted == True %}
+        <strike>{{task}}</strike>
+        {% else %}
+        <span>{{task}}</span>
+      {% endif %}
+  </div>
+{% endfor %}
+<form method="POST" action="/">
+    {{form.title}}
+    {% csrf_token %}
+    <input type="submit" name="Add Task" >
+</form>
+  
+{% endblock content %}
